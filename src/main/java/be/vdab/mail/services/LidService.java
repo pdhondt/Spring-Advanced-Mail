@@ -5,6 +5,7 @@ import be.vdab.mail.dto.NieuwLid;
 import be.vdab.mail.mailing.LidMailing;
 import be.vdab.mail.repositories.LidRepository;
 import jakarta.mail.MessagingException;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,5 +25,9 @@ public class LidService {
                 nieuwLid.emailAdres());
         lidRepository.save(lid);
         lidMailing.stuurMailNaRegistratie(lid);
+    }
+    @Scheduled(fixedRate = 60_000)
+    public void stuurMailMetAantalLeden() throws MessagingException {
+        lidMailing.stuurMailMetAantalLeden(lidRepository.count());
     }
 }
