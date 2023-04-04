@@ -5,6 +5,7 @@ import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,6 +17,7 @@ public class LidMailing {
         this.sender = sender;
         this.userName = userName;
     }
+    @Async
     public void stuurMailNaRegistratie(Lid lid) throws MessagingException {
         var message = sender.createMimeMessage();
         var helper = new MimeMessageHelper(message);
